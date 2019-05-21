@@ -1,13 +1,29 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: ""
+      value: '',
+      divContent: ''
     };
     this.enterText = this.enterText.bind(this);
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      let newDivContent = "";
+      if (this.state.value !== '') {
+        newDivContent = this.state.divContent + " " + this.state.value;
+      } else {
+        newDivContent = this.state.divContent;
+      }
+      this.setState({
+        divContent: newDivContent,
+        value: ''
+      });
+    }, 10000);
   }
 
   enterText(e) {
@@ -16,22 +32,23 @@ class App extends Component {
     this.setState({
       value: text
     });
-    setInterval(() => {
-      this.setState({ value: "" });
-    }, 10000);
   }
+
   render() {
-    const { value } = this.state;
+    const { divContent } = this.state;
+
+    console.log(typeof divContent);
+    
     return (
       <div className="App">
-        <h1>LUM</h1>
+        <h1>LUM task</h1>
         <textarea
           value={this.state.value}
           onChange={this.enterText}
           rows="10"
           placeholder="Type something in here..."
-        />
-        <div>{value}</div>
+          />
+          <div id='test'>{divContent}</div>
       </div>
     );
   }
